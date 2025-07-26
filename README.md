@@ -1,135 +1,114 @@
-Food Delivery - Full-Stack Application with DevOps Pipeline
+## TOMATO - Food Ordering Website
+
 This project is a complete, full-stack food delivery web application featuring a modern, automated DevOps workflow. The application is built with a React frontend, a Node.js backend, and is fully containerized with Docker, orchestrated with Kubernetes, and deployed via a CI/CD pipeline using GitHub Actions.
 
-🚀 Features
-Customer Frontend: Browse restaurants and menu items, add items to the cart, place orders, and view order history.
+## Features
 
-Admin Panel: A separate interface to manage food items (add, list, remove) and view/update customer orders.
+- Customer Frontend: Browse restaurants and menu items, add items to the cart, place orders, and view order history.
 
-Microservices Architecture: Decoupled frontend and backend services for independent development and scaling.
+- Admin Panel: A separate interface to manage food items (add, list, remove) and view/update customer orders.
 
-Containerized Environment: Fully containerized for consistent development and production environments.
+- Microservices Architecture: Decoupled frontend and backend services for independent development and scaling.
 
-Automated CI/CD: Automated builds and Docker image pushes to Docker Hub on every commit to the main branch.
+- Containerized Environment: Fully containerized for consistent development and production environments.
 
-Scalable Deployment: Deployed on Kubernetes for high availability, self-healing, and scalability.
+- Automated CI/CD: Automated builds and Docker image pushes to Docker Hub on every commit to the main branch.
 
-🛠️ Tech Stack
-Frontend: React.js
+- Scalable Deployment: Deployed on Kubernetes for high availability, self-healing, and scalability.
 
-Backend: Node.js, Express.js
+## Screenshots
 
-Database: MongoDB
+![Hero](https://i.ibb.co/59cwY75/food-hero.png)
+- Hero Section
 
-Containerization: Docker, Docker Compose
+![Products](https://i.ibb.co/JnNQPyQ/food-products.png)
+- Products Section
 
-Orchestration: Kubernetes (K8s)
+![Cart](https://i.ibb.co/t2LrQ8p/food-cart.png)
+- Cart Page
 
-CI/CD: GitHub Actions
+![Login](https://i.ibb.co/s6PgwkZ/food-login.png)
+- Login Popup
 
-Web Server (Frontend): Nginx
+## Run Locally
 
-📂 Project Structure
-.
-├── .github/workflows/   # GitHub Actions CI/CD pipeline
-│   └── ci.yaml
-├── admin/               # React source code for the admin panel
-├── backend/             # Node.js/Express.js source code for the API
-│   └── Dockerfile
-├── frontend/            # React source code for the customer-facing app
-│   └── Dockerfile
-├── kubernetes/          # Kubernetes manifest files (.yaml)
-│   ├── frontend-deployment.yaml
-│   ├── backend-deployment.yaml
-│   ├── mongo-deployment.yaml
-│   └── ... (service files)
-└── compose.yaml         # Docker Compose for local development
+Clone the project
 
-🏁 Getting Started
-Prerequisites
-Docker installed and running.
+```bash
+    git clone https://github.com/Grandhechaithu/Tomatoo_Delivery.git
+```
+Go to the project directory
 
-Kubernetes enabled (e.g., via Docker Desktop).
+```bash
+    cd Food-Delivery
+```
+Install dependencies (frontend)
 
-kubectl command-line tool installed.
+```bash
+    cd frontend
+    npm install
+```
+Install dependencies (admin)
 
-A Docker Hub account.
+```bash
+    cd admin
+    npm install
+```
+Install dependencies (backend)
 
-🏡 Local Development (Using Docker Compose)
-This is the easiest way to run the entire application stack on your local machine.
+```bash
+    cd backend
+    npm install
+```
+Setup Environment Vaiables
 
-Clone the repository:
+```Make .env file in "backend" folder and store environment Variables
+  JWT_SECRET=YOUR_SECRET_TEXT
+  SALT=YOUR_SALT_VALUE
+  MONGO_URL=YOUR_DATABASE_URL
+  STRIPE_SECRET_KEY=YOUR_KEY
+ ```
 
-git clone (https://github.com/Grandhechaithu/tomatoo.git)
-cd <repository-directory>
+Setup the Frontend and Backend URL
+   - App.jsx in Admin folder
+      const url = YOUR_BACKEND_URL
+     
+  - StoreContext.js in Frontend folder
+      const url = YOUR_BACKEND_URL
 
-Start the application:
+  - orderController in Backend folder
+      const frontend_url = YOUR_FRONTEND_URL 
 
-docker-compose up
+Start the Backend server
 
-Access the services:
+```bash
+    nodemon server.js
+```
 
-Frontend Application: http://localhost
+Start the Frontend server
 
-Admin Panel: http://localhost:5174 (or as configured)
+```bash
+    npm start
+```
 
-Backend API: http://localhost:4000
+Start the Backend server
 
-Mongo Express (Database GUI): http://localhost:8081
+```bash
+    npm start
+```
+## DevOps Tools Resource Links
+- [Kubernetes (K8s)](https://kubernetes.io/docs/home/)
+- [Docker](https://docs.docker.com/)
+- [GitHub Actions](https://docs.github.com/en/actions)
+- [CI/CD Concepts](https://roadmap.sh/devops)
 
-🚢 Kubernetes Deployment
-To deploy the application to a Kubernetes cluster (like the one in Docker Desktop):
 
-Build and Push Docker Images:
+## Contributing
 
-Log in to Docker Hub:
+Contributions are always welcome!
+Just raise an issue, and we will discuss it.
 
-docker login
+## Feedback
 
-Build, tag, and push the backend image. Replace your-dockerhub-username with your actual username.
+If you have any feedback, please reach out to me [here](https://www.linkedin.com/in/chaithanya-grandhe/)
 
-docker build -t your-dockerhub-username/food-delivery-backend:latest ./backend
-docker push your-dockerhub-username/food-delivery-backend:latest
-
-Build, tag, and push the frontend image:
-
-docker build -t your-dockerhub-username/food-delivery-frontend:latest ./frontend
-docker push your-dockerhub-username/food-delivery-frontend:latest
-
-Update Kubernetes Manifests:
-
-In kubernetes/backend-deployment.yaml and kubernetes/frontend-deployment.yaml, make sure the image: key points to the images you just pushed to your Docker Hub repository.
-
-Apply the Kubernetes Configuration:
-Navigate to the kubernetes directory and apply all manifest files:
-
-cd kubernetes
-kubectl apply -f .
-
-Access the Application:
-
-The services will take a minute to start. Check their status with kubectl get all.
-
-Use port-forward to access the frontend service from your browser:
-
-kubectl port-forward service/frontend-service 8080:80
-
-Open http://localhost:8080 in your web browser.
-
-⚙️ CI/CD Pipeline with GitHub Actions
-This project is configured with a GitHub Actions workflow that automatically builds and pushes the frontend and backend Docker images to Docker Hub.
-
-Workflow File: .github/workflows/ci.yaml
-
-Trigger: The workflow runs on every push to the main branch.
-
-Configuration
-To enable this workflow in your own fork of the repository, you must configure the following secrets in your GitHub repository's settings:
-
-Go to Settings > Secrets and variables > Actions.
-
-Add the following repository secrets:
-
-DOCKERHUB_USERNAME: Your Docker Hub username.
-
-DOCKERHUB_TOKEN: A Docker Hub personal access token with read/write permissions.
